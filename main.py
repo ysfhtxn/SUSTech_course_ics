@@ -105,6 +105,7 @@ if __name__ == '__main__':
         route, JSESSIONID = cas_login(userName, passWord)
         if route == "" or JSESSIONID == "":
             print("[\x1b[0;33m-\x1b[0m] " + "请重试...")
+            
     head['cookie'] = f'route={route}; JSESSIONID={JSESSIONID};'
     
     stYEAR = input("本学期第一周所在年：")
@@ -122,7 +123,8 @@ if __name__ == '__main__':
             new_date = str(int(current_month_date.strftime('%Y'))) + '-' + str(int(current_month_date.strftime('%m'))) + '-' + str(day)
             semester_info = loads(
                 requests.post('https://tis.sustech.edu.cn/component/queryrcxxlist', data={"rcrq": new_date}, headers=head, verify=False).text)
-            courses_list.append(semester_info[0])
+            courses_list += semester_info
+
     print("[\x1b[0;32m+\x1b[0m] " + "获取日程成功")
     
     ics_name = 'courses.ics'
